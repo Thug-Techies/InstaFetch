@@ -215,20 +215,6 @@
       margin-bottom: 14px;
     }
 
-    .popup #popupMessage {
-      min-height: 4em;
-      text-align: left;
-      white-space: pre-wrap;
-      margin: 12px 0;
-      color: #cccccc;
-      font-size: 0.95rem;
-    }
-
-    .popup .cursor {
-      background: #00ff41;
-      width: 9px;
-    }
-
     .popup button {
       margin-top: 20px;
       padding: 10px 32px;
@@ -357,11 +343,11 @@
 
 </div>
 
-<!-- Popup -->
+<!-- Popup (original version - no typing effect) -->
 <div class="popup-overlay" id="popupOverlay">
   <div class="popup">
-    <h3 id="popupTitle"></h3>
-    <p id="popupMessage"><span class="cursor"></span></p>
+    <h3 id="popupTitle">Message</h3>
+    <p id="popupMessage"></p>
     <button onclick="closePopup()">OK</button>
   </div>
 </div>
@@ -406,7 +392,7 @@ function hackerEffect(el, text, delay = 60) {
   revealNextLetter();
 }
 
-// ── Welcome Typing Effect ─────────────────────────────────────────
+// ── Welcome Typing Effect (slower speed) ──────────────────────────
 const welcomeEl = document.getElementById("welcomeText");
 const welcomeText = `Welcome to INSTAFETCH
 Your all-in-one media hub
@@ -422,57 +408,24 @@ function typeWriter() {
     const cursor = welcomeEl.querySelector(".cursor");
     cursor.insertAdjacentHTML("beforebegin", char);
     charIndex++;
-    setTimeout(typeWriter, 80);
+    setTimeout(typeWriter, 100);   // ← slower / more natural typing speed
   } else {
+    // Optional: hide cursor after finished
     setTimeout(() => {
       const cursor = welcomeEl.querySelector(".cursor");
       if (cursor) cursor.style.opacity = "0";
-    }, 3000);
+    }, 2500);
   }
 }
 
-// ── Popup Typing Effect ───────────────────────────────────────────
-let popupCharIndex = 0;
-let popupTypingTimeout = null;
-
-function typePopupMessage(message) {
-  const popupMsgEl = document.getElementById("popupMessage");
-  const cursor = popupMsgEl.querySelector(".cursor");
-
-  popupMsgEl.innerHTML = '<span class="cursor"></span>';
-  popupCharIndex = 0;
-
-  if (popupTypingTimeout) clearTimeout(popupTypingTimeout);
-
-  function typeNext() {
-    if (popupCharIndex < message.length) {
-      const char = message[popupCharIndex] === "\n" ? "<br>" : message[popupCharIndex];
-      cursor.insertAdjacentHTML("beforebegin", char);
-      popupCharIndex++;
-      popupTypingTimeout = setTimeout(typeNext, 65);
-    } else {
-      setTimeout(() => {
-        const c = popupMsgEl.querySelector(".cursor");
-        if (c) c.style.opacity = "0";
-      }, 2000);
-    }
-  }
-
-  typeNext();
-}
-
-// ── Popup Helpers ─────────────────────────────────────────────────
+// ── Popup Helpers (original - instant text) ───────────────────────
 function openPopup(title, message) {
   document.getElementById("popupTitle").textContent = title;
+  document.getElementById("popupMessage").textContent = message;
   document.getElementById("popupOverlay").style.display = "flex";
-  typePopupMessage(message);
 }
 
 function closePopup() {
-  if (popupTypingTimeout) {
-    clearTimeout(popupTypingTimeout);
-    popupTypingTimeout = null;
-  }
   document.getElementById("popupOverlay").style.display = "none";
 }
 
