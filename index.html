@@ -109,6 +109,7 @@
       white-space: pre-line;
       line-height: 1.9;
       opacity: 0.92;
+      min-height: 7em; /* helps prevent layout jumping */
     }
 
     .api-grid {
@@ -243,7 +244,9 @@
     <div class="created by Thug"></div>
   </div>
 
-  <div class="welcome" id="welcomeText"></div>
+  <div class="welcome" id="welcomeText">
+    <span class="cursor"></span>
+  </div>
 
   <main class="api-grid">
 
@@ -402,9 +405,20 @@ let charIndex = 0;
 function typeWriter() {
   if (charIndex < welcomeText.length) {
     const char = welcomeText[charIndex] === "\n" ? "<br>" : welcomeText[charIndex];
-    welcomeEl.innerHTML += char;
+    
+    // Insert character right before the cursor
+    const cursor = welcomeEl.querySelector(".cursor");
+    cursor.insertAdjacentHTML("beforebegin", char);
+    
     charIndex++;
     setTimeout(typeWriter, 55);
+  }
+  // Optional: fade out cursor when finished
+  else {
+    setTimeout(() => {
+      const cursor = welcomeEl.querySelector(".cursor");
+      if (cursor) cursor.style.opacity = "0";
+    }, 2200);
   }
 }
 
