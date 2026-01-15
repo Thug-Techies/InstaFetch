@@ -26,17 +26,16 @@
     }
 
     body {
-      background: #0a0a0a;
+      background: #000000;
       color: #e0e0e0;
       font-family: 'Source Code Pro', monospace;
       line-height: 1.6;
       min-height: 100vh;
     }
 
-    /* Top bar with title + hacker effect */
     .top-bar {
-      background: #000;
-      border-bottom: 1px solid #222;
+      background: #000000;
+      border-bottom: 1px solid #1a1a1a;
       padding: 12px 20px;
       display: flex;
       align-items: center;
@@ -46,18 +45,18 @@
     }
 
     .hacker-title {
-      color: #00ffea;
+      color: #ffffff;
       font-size: 1.4rem;
       font-weight: bold;
       letter-spacing: 2px;
-      text-shadow: 0 0 8px #00ffea55;
+      /* removed glow */
     }
 
     .cursor {
       display: inline-block;
       width: 10px;
       height: 1.1em;
-      background: #00ffea;
+      background: #ffffff;
       margin-left: 3px;
       vertical-align: middle;
       animation: blink 0.9s step-end infinite;
@@ -74,7 +73,6 @@
       padding: 30px 15px;
     }
 
-    /* Header Image + Created By */
     .header {
       position: relative;
       text-align: center;
@@ -86,6 +84,7 @@
       border-radius: 10px;
       box-shadow: 0 0 35px rgba(0,0,0,0.95);
       image-rendering: crisp-edges;
+      filter: grayscale(40%) contrast(1.1);
     }
 
     .created-by {
@@ -93,8 +92,8 @@
       bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0,0,0,0.8);
-      color: #ff4d94;
+      background: rgba(0,0,0,0.75);
+      color: #dddddd;
       padding: 6px 20px;
       border-radius: 6px;
       font-weight: bold;
@@ -102,19 +101,17 @@
       letter-spacing: 1px;
     }
 
-    /* Welcome Text */
     .welcome {
       text-align: center;
       margin: 0 auto 70px;
       max-width: 780px;
-      color: #00ffea;
+      color: #dddddd;
       font-size: 1.15rem;
       white-space: pre-line;
       line-height: 1.9;
-      opacity: 0.95;
+      opacity: 0.92;
     }
 
-    /* API Cards */
     .api-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -123,17 +120,17 @@
     }
 
     .api-card {
-      background: #111111;
-      border: 1px solid #222;
+      background: #0d0d0d;
+      border: 1px solid #1a1a1a;
       border-radius: 10px;
       padding: 24px;
       transition: all 0.25s ease;
     }
 
     .api-card:hover {
-      border-color: #ff4d94;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(255,77,148,0.15);
+      border-color: #444444;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
     }
 
     .api-card img {
@@ -142,16 +139,17 @@
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 18px;
+      filter: grayscale(30%);
     }
 
     .api-card h2 {
-      color: #ff4d94;
+      color: #ffffff;
       font-size: 1.45rem;
       margin-bottom: 8px;
     }
 
     .api-card p {
-      color: #aaa;
+      color: #aaaaaa;
       font-size: 0.92rem;
       margin-bottom: 18px;
     }
@@ -167,36 +165,36 @@
       flex: 1;
       min-width: 220px;
       padding: 12px 16px;
-      background: #000;
-      border: 1px solid #333;
+      background: #000000;
+      border: 1px solid #2a2a2a;
       border-radius: 6px;
-      color: #0ff;
+      color: #cccccc;
       font-family: inherit;
       font-size: 0.95rem;
     }
 
     .btn {
       padding: 12px 22px;
-      background: #ff4d94;
-      color: white;
-      border: none;
+      background: #222222;
+      color: #eeeeee;
+      border: 1px solid #444444;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
+      transition: all 0.2s;
       font-family: 'Minecraftia', monospace;
     }
 
     .btn:hover {
-      background: #ff3399;
+      background: #333333;
+      border-color: #555555;
       transform: translateY(-1px);
     }
 
-    /* Popup */
     .popup-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.88);
       display: none;
       align-items: center;
       justify-content: center;
@@ -204,8 +202,8 @@
     }
 
     .popup {
-      background: #111;
-      border: 1px solid #444;
+      background: #111111;
+      border: 1px solid #333333;
       border-radius: 10px;
       padding: 28px;
       max-width: 420px;
@@ -213,18 +211,22 @@
     }
 
     .popup h3 {
-      color: #ff4d94;
+      color: #eeeeee;
       margin-bottom: 14px;
     }
 
     .popup button {
       margin-top: 20px;
       padding: 10px 32px;
-      background: #333;
-      color: white;
-      border: 1px solid #555;
+      background: #222222;
+      color: #dddddd;
+      border: 1px solid #444444;
       border-radius: 6px;
       cursor: pointer;
+    }
+
+    .popup button:hover {
+      background: #333333;
     }
   </style>
 </head>
@@ -279,7 +281,7 @@
       </div>
     </div>
 
-    <!-- Add more cards: TikTok, Spotify, Twitter/X, Pinterest, Threads... -->
+    <!-- Add more cards here... -->
   </main>
 
 </div>
