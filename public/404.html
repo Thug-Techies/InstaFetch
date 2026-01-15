@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 | Clip-Ops</title>
 
+  <!-- Minecraft Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0d0d0d 40%, #1a1a1a 100%);
+      font-family: 'Press Start 2P', cursive;
+      color: #ccc;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #00ff80;
+      text-shadow: 2px 2px #003300, 0 0 10px #00ffaa;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 2px 2px #003300, 0 0 10px #00ffaa; }
+      to { text-shadow: 2px 2px #006600, 0 0 25px #00ffcc; }
+    }
+
+    p {
+      margin: 20px 0;
+      font-size: 0.9rem;
+      color: #9f9f9f;
+      max-width: 600px;
+    }
+
+    a {
+      display: inline-block;
+      color: #00ffaa;
+      text-decoration: none;
+      border: 2px solid #00ffaa;
+      padding: 10px 25px;
+      border-radius: 6px;
+      margin-top: 20px;
+      background: rgba(0, 255, 170, 0.08);
+      box-shadow: 0 0 10px #00ffaa33;
+      animation: bounce 2s infinite ease-in-out;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    a:hover {
+      background: #00ffaa;
+      color: #0d0d0d;
+      transform: scale(1.08);
+      box-shadow: 0 0 25px #00ffaa;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>404</h1>
+  <p>Uh oh! You’ve wandered into an unloaded chunk.<br>The page you’re looking for doesn’t exist.</p>
+
+  <a href="javascript:void(0)" onclick="goBack()">Return Home</a>
+
+  <script>
+    function goBack() {
+      // If user came from another page
+      if (document.referrer && document.referrer !== window.location.href) {
+        window.location.href = document.referrer;
+      } else {
+        // Direct visit -> go to home
+        window.location.href = "/";
+      }
+    }
+  </script>
+</body>
+</html>
