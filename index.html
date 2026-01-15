@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>INSTAFETCH — Media Downloader Hub</title>
+
+  <link rel="canonical" href="https://instafetch.store/" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="images/rose.jpg" />
+
+  <!-- SEO & OG -->
+  <meta name="description" content="INSTAFETCH — The ultimate hub to download media from YouTube, Instagram, Pinterest, and more." />
+  <meta name="keywords" content="INSTAFETCH, Media Downloader, Video Downloader, Music Downloader, Online Tools" />
+  <meta name="author" content="INSTAFETCH" />
+  <meta property="og:title" content="INSTAFETCH — Media Downloader Hub" />
+  <meta property="og:description" content="Download videos, music, and media from your favorite platforms instantly with style." />
+  <meta property="og:image" content="https://i.ibb.co/60vszfKg/file-98.jpg" />
+  <meta property="og:url" content="https://instafetch.store/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/line.css" />
+  <link rel="stylesheet" href="css/all.min.css" />
+  <link rel="stylesheet" href="css/atom-one-dark.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Scripts -->
+  <script src="js/jquery.js"></script>
+  <script src="js/highlight.min.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="hacker-text" id="hackerText"></div>
+    <div class="navbar-right">
+      <img src="https://i.ibb.co/kVd73L5n/file-97.jpg" alt="Profile">
+      <span>𒆙𓅆ƬӇƱƓƝƖƑƖƇƐƝƬ⁹⁹⁹𓅓𒆙</span>
+    </div>
+  </div>
+
+  <!-- HERO IMAGE + INTRO TEXT -->
+  <div class="main-content">
+    <div class="image-box">
+      <div class="image-overlay">Created By Atem</div>
+      <img src="https://i.ibb.co/60vszfKg/file-98.jpg" alt="© THUG TECHIES">
+    </div>
+
+    <div style="display:flex;justify-content:center;">
+      <div class="intro-text" id="typing-text"></div>
+    </div>
+  </div>
+
+  <!-- API LIST -->
+  <main class="api-list">
+    <!-- Apple -->
+    <div class="api-card">
+      <img src="https://i.ouim.me/i/6bff2461.jpg" alt="Apple Music">
+      <h2>APPLE MUSIC</h2>
+      <input id="appleUrl" class="url-input" placeholder="Paste Apple Music URL">
+      <button class="btn" onclick="downloadFromServer('apple','appleUrl','Apple Music',this)">Download</button>
+    </div>
+
+    <!-- Instagram -->
+    <div class="api-card">
+      <img src="https://files.catbox.moe/g5phaa.jpg" alt="Instagram">
+      <h2>INSTAGRAM</h2>
+      <input id="instagramUrl" class="url-input" placeholder="Paste Instagram URL">
+      <button class="btn" onclick="downloadFromServer('instagram','instagramUrl','Instagram',this)">Download</button>
+    </div>
+
+    <!-- Pinterest -->
+    <div class="api-card">
+      <img src="https://files.catbox.moe/b7nqr9.jpg" alt="Pinterest">
+      <h2>PINTEREST</h2>
+      <input id="pinterestUrl" class="url-input" placeholder="Paste Pinterest URL">
+      <button class="btn" onclick="downloadFromServer('pinterest','pinterestUrl','Pinterest',this)">Download</button>
+    </div>
+
+    <!-- Spotify -->
+    <div class="api-card">
+      <img src="https://files.catbox.moe/75zc7e.jpg" alt="Spotify">
+      <h2>SPOTIFY</h2>
+      <input id="spotifyUrl" class="url-input" placeholder="Paste Spotify URL">
+      <button class="btn" onclick="downloadFromServer('spotify','spotifyUrl','Spotify',this)">Download</button>
+    </div>
+
+    <!-- TikTok -->
+    <div class="api-card">
+      <img src="https://files.catbox.moe/za5dx1.jpg" alt="TikTok">
+      <h2>TIKTOK</h2>
+      <input id="tiktokUrl" class="url-input" placeholder="Paste TikTok URL">
+      <button class="btn" onclick="downloadFromServer('tiktok','tiktokUrl','TikTok',this)">Download</button>
+    </div>
+
+    <!-- YouTube -->
+    <div class="api-card">
+      <img src="https://files.catbox.moe/1y5vqb.jpg" alt="YouTube">
+      <h2>YOUTUBE</h2>
+      <input id="youtubeUrl" class="url-input" placeholder="Paste YouTube URL">
+      <button class="btn" onclick="downloadFromServer('ytmp3','youtubeUrl','YouTube',this)">AUDIO</button>
+      <button class="btn" onclick="downloadFromServer('ytmp4','youtubeUrl','YouTube',this)">VIDEO</button>
+    </div>
+  </main>
+
+  <!-- POPUPS -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+      <h3 id="popupTitle">Message</h3>
+      <p id="popupMessage"></p>
+      <button onclick="closePopup()">OK</button>
+    </div>
+  </div>
+
+  <div class="popup-overlay" id="popup">
+    <div class="popup">
+      <img src="https://files.catbox.moe/hulcb6.jpg" alt="Clips-Ops Banner">
+      <h3>Welcome to Clips-Ops</h3>
+      <p>Download your favorite videos fast, clean, and in HD.<br>
+      Join our WhatsApp Channel for updates, new tools, and features!</p>
+      <div class="popup-buttons">
+        <button onclick="window.open('https://whatsapp.com/channel/0029VaoOiuwDp2QH070eTE01','_blank')">Join Channel</button>
+        <button onclick="closePopup()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 Clips-Ops BY THUG TECHIES • ALL RIGHTS RESERVED</footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // -------------- HACKER + TYPING EFFECT --------------
+    const hackerText = document.getElementById("hackerText");
+    const hackerOriginal = "INSTA FETCH  ( 萨格科技 ）";
+    const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?/~";
+
+    function hackerEffect(el, text, delay = 60) {
+      let i = 0;
+      function next() {
+        if (i >= text.length) return;
+        let count = 0;
+        const int = setInterval(() => {
+          el.innerText = text.slice(0,i) + chars[Math.floor(Math.random()*chars.length)];
+          if (++count > 10) {
+            clearInterval(int);
+            el.innerText = text.slice(0,++i);
+            setTimeout(next, delay);
+          }
+        },30);
+      }
+      next();
+    }
+
+    const typingText = `Welcome to this Simple Api
+Here you can find variety
+APIs available to your bot
+YouTube, Spotify, Deezer`;
+    const target = document.getElementById("typing-text");
+    let t = 0;
+
+    function typeText() {
+      if (t < typingText.length) {
+        target.innerHTML += typingText[t++] === "\n" ? "<br>" : typingText[t-1];
+        setTimeout(typeText, 80);
+      }
+    }
+
+    // -------------- DOWNLOAD LOGIC --------------
+    const patterns = {
+      apple: /(?:https?:\/\/)?(?:music\.apple\.com)\/.+/i,
+      instagram: /(?:https?:\/\/)?(?:www\.)?instagram\.com\/.+/i,
+      pinterest: /(?:https?:\/\/)?(?:www\.)?(pinterest\.com|pin\.it)\/.+/i,
+      spotify: /(?:https?:\/\/)?(?:open\.)?spotify\.com\/track\/[A-Za-z0-9]+(?:\S*)?/i,
+      threads: /(?:https?:\/\/)?(?:www\.)?threads\.com\/.+/i,
+      tiktok: /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/.+/i,
+      twitter: /(?:https?:\/\/)?(?:www\.)?(?:twitter\.com|x\.com)\/.+/i,
+      youtube: /(youtube\.com|youtu\.be)/i
+    };
+
+    function validatePlatform(type, url) {
+      return patterns[type]?.test(url);
+    }
+
+    async function downloadFromServer(type, inputId, name, button) {
+      const url = document.getElementById(inputId).value.trim();
+      if (!url) return openPopup("Empty Field","Paste a URL first.");
+      const platform = (type==="ytmp3"||type==="ytmp4")?"youtube":type;
+      if (!validatePlatform(platform,url)) return openPopup("Invalid Link","This is not a valid "+name+" link.");
+      openPopup("Processing","Please wait...");
+
+      const apiRoutes = {
+        apple: `https://delirius-apiofc.vercel.app/download/applemusicdl?url=${encodeURIComponent(url)}`,
+        instagram: `https://delirius-apiofc.vercel.app/download/instagram?url=${encodeURIComponent(url)}`,
+        pinterest: `https://delirius-apiofc.vercel.app/download/pinterestdl?url=${encodeURIComponent(url)}`,
+        spotify: `https://delirius-apiofc.vercel.app/download/spotifydl?url=${encodeURIComponent(url)}`,
+        threads: `https://delirius-apiofc.vercel.app/download/threads?url=${encodeURIComponent(url)}`,
+        tiktok: `https://delirius-apiofc.vercel.app/download/tiktok?url=${encodeURIComponent(url)}`,
+        twitter: `https://delirius-apiofc.vercel.app/download/twitterdl?url=${encodeURIComponent(url)}`,
+        ytmp3: `https://kyyokatsurestapi.my.id/downloader/ytmp3?url=${encodeURIComponent(url)}`,
+        ytmp4: `https://kyyokatsurestapi.my.id/downloader/ytmp4?url=${encodeURIComponent(url)}`
+      };
+
+      const apiURL = apiRoutes[type];
+      if (!apiURL) { closePopup(); return openPopup("Error","Unknown download type."); }
+
+      try {
+        const response = await fetch(apiURL);
+        const data = await response.json();
+        closePopup();
+
+        if (!data) return openPopup("Error","No response from API.");
+        let finalDownload = null;
+        switch(type){
+          case"apple": finalDownload=data?.data?.download||data?.download||data?.url||null;break;
+          case"tiktok": finalDownload=data?.data?.meta?.media?.[0]?.hd||data?.data?.meta?.media?.[0]?.org||data?.data?.media?.[0]?.url;break;
+          case"pinterest": finalDownload=data?.data?.download?.url||data?.download||data?.url;break;
+          case"instagram": finalDownload=data?.data?.[0]?.url||data?.url||data?.download;break;
+          case"ytmp3": finalDownload=data?.dl||data?.url||data?.result;break;
+          case"ytmp4": finalDownload=data?.result?.mp4||data?.url||data?.dl;break;
+          case"twitter": finalDownload=data?.media?.[0]?.url||data?.media?.[0]?.mp4||data?.url||data?.download;break;
+          case"spotify": finalDownload=data?.data?.url||data?.url||data?.download;break;
+          case"threads": finalDownload=data?.data?.[0]?.url||data?.data?.url||data?.url||(Array.isArray(data)?data[0]?.url:null);break;
+        }
+        if(!finalDownload) finalDownload=data?.data?.download?.url||data?.download||data?.url||data?.result||null;
+        if(!finalDownload) return openPopup("Error","No downloadable link found.");
+        window.location.href=finalDownload;
+      } catch(err){
+        console.error(err); closePopup(); openPopup("Network Error","Failed to reach API.");
+      }
+    }
+
+    function openPopup(title,msg){
+      const titleEl=document.getElementById('popupTitle'); const msgEl=document.getElementById('popupMessage');
+      if(titleEl)titleEl.innerText=title; if(msgEl)msgEl.innerText=msg;
+      const overlay=document.getElementById('popupOverlay'); if(overlay)overlay.style.display='flex';
+    }
+
+    function closePopup(){
+      const overlay=document.getElementById('popupOverlay'); if(overlay)overlay.style.display='none';
+      const welcome=document.getElementById('popup'); if(welcome)welcome.style.display='none';
+    }
+
+    // ---------------- ON LOAD ----------------
+    window.addEventListener("load", ()=>{
+      hackerEffect(hackerText,hackerOriginal);
+      typeText();
+      const welcome = document.getElementById("popup");
+      if(welcome) welcome.style.display="flex";
+    });
+  </script>
+</body>
+</html>
