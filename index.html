@@ -13,8 +13,6 @@
   <meta property="og:description" content="Download videos, music, and media from YouTube, Instagram, TikTok, Spotify and more — fast & clean." />
   <meta property="og:image" content="https://files.catbox.moe/6mlafu.jpg" />
   <meta property="og:url" content="https://clipsops.store/" />
-  <meta name="description" content="INSTAFETCH — The ultimate hub to download media from YouTube, Instagram, Pinterest, TikTok, Spotify and more." />
-  <meta name="keywords" content="INSTAFETCH, Clips-Ops, media downloader, video downloader, music downloader, instagram downloader, tiktok downloader" />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet" />
@@ -35,10 +33,45 @@
       min-height: 100vh;
     }
 
+    /* Top bar with title + hacker effect */
+    .top-bar {
+      background: #000;
+      border-bottom: 1px solid #222;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .hacker-title {
+      color: #00ffea;
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 0 0 8px #00ffea55;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.1em;
+      background: #00ffea;
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: blink 0.9s step-end infinite;
+    }
+
+    @keyframes blink {
+      from, to { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 20px 15px;
+      padding: 30px 15px;
     }
 
     /* Header Image + Created By */
@@ -67,7 +100,6 @@
       font-weight: bold;
       font-size: 1rem;
       letter-spacing: 1px;
-      pointer-events: none;
     }
 
     /* Welcome Text */
@@ -82,7 +114,7 @@
       opacity: 0.95;
     }
 
-    /* API Cards Grid */
+    /* API Cards */
     .api-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -96,8 +128,6 @@
       border-radius: 10px;
       padding: 24px;
       transition: all 0.25s ease;
-      position: relative;
-      overflow: hidden;
     }
 
     .api-card:hover {
@@ -126,7 +156,7 @@
       margin-bottom: 18px;
     }
 
-    .api-card .input-group {
+    .input-group {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -155,7 +185,6 @@
       cursor: pointer;
       transition: 0.2s;
       font-family: 'Minecraftia', monospace;
-      letter-spacing: 0.5px;
     }
 
     .btn:hover {
@@ -197,13 +226,14 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
-    .popup button:hover {
-      background: #444;
-    }
   </style>
 </head>
 <body>
+
+<!-- Top Bar with Hacker Title Effect -->
+<div class="top-bar">
+  <div id="hackerText" class="hacker-title"></div>
+</div>
 
 <div class="container">
 
@@ -237,9 +267,7 @@
       </div>
     </div>
 
-    <!-- Add the rest of your cards similarly... -->
-
-    <!-- YouTube (example with two buttons) -->
+    <!-- YouTube -->
     <div class="api-card">
       <img src="https://files.catbox.moe/1y5vqb.jpg" alt="YouTube">
       <h2>YOUTUBE</h2>
@@ -251,7 +279,7 @@
       </div>
     </div>
 
-    <!-- ... TikTok, Spotify, Twitter/X, Pinterest, Threads ... -->
+    <!-- Add more cards: TikTok, Spotify, Twitter/X, Pinterest, Threads... -->
   </main>
 
 </div>
@@ -266,7 +294,46 @@
 </div>
 
 <script>
-// ── Typing Effect ───────────────────────────────────────────────
+// ── Hacker Glitch Title Effect ────────────────────────────────────
+const hackerText = document.getElementById("hackerText");
+const original = "INSTAFETCH • 萨格科技";
+const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?/~";
+
+function hackerEffect(el, text, delay = 60) {
+  let currentIndex = 0;
+
+  function revealNextLetter() {
+    if (currentIndex >= text.length) return;
+
+    let iterations = 0;
+    const maxIterations = 10;
+
+    const scrambleInterval = setInterval(() => {
+      const scrambled = text
+        .split("")
+        .map((char, index) => {
+          if (index < currentIndex) return char;
+          if (index === currentIndex) return chars[Math.floor(Math.random() * chars.length)];
+          return char;
+        })
+        .join("");
+
+      el.innerText = scrambled;
+
+      iterations++;
+      if (iterations >= maxIterations) {
+        currentIndex++;
+        el.innerText = text.slice(0, currentIndex);
+        clearInterval(scrambleInterval);
+        setTimeout(revealNextLetter, delay);
+      }
+    }, 30);
+  }
+
+  revealNextLetter();
+}
+
+// ── Typing with Blinking Cursor ───────────────────────────────────
 const welcomeEl = document.getElementById("welcomeText");
 const welcomeText = `Welcome to INSTAFETCH
 Your all-in-one media hub
@@ -275,17 +342,17 @@ Fast. Clean. No watermark.
 Powered by THUG TECHIES`;
 
 let charIndex = 0;
+
 function typeWriter() {
   if (charIndex < welcomeText.length) {
-    welcomeEl.innerHTML += welcomeText[charIndex] === "\n" 
-      ? "<br>" 
-      : welcomeText[charIndex];
+    const char = welcomeText[charIndex] === "\n" ? "<br>" : welcomeText[charIndex];
+    welcomeEl.innerHTML += char;
     charIndex++;
     setTimeout(typeWriter, 55);
   }
 }
 
-// ── Popup Helpers ───────────────────────────────────────────────
+// ── Popup Helpers ─────────────────────────────────────────────────
 function openPopup(title, message) {
   document.getElementById("popupTitle").textContent = title;
   document.getElementById("popupMessage").textContent = message;
@@ -296,7 +363,7 @@ function closePopup() {
   document.getElementById("popupOverlay").style.display = "none";
 }
 
-// ── Download Logic (your existing version — cleaned up a bit) ──
+// ── Download Logic (unchanged) ────────────────────────────────────
 const patterns = {
   apple:     /music\.apple\.com/i,
   instagram: /instagram\.com/i,
@@ -337,8 +404,6 @@ async function downloadFromServer(type, inputId, name, button) {
     const data = await res.json();
     closePopup();
 
-    // You can keep your detailed switch logic here...
-    // For brevity I'm using a simple fallback version:
     const downloadLink = data?.url || data?.data?.url || data?.download || data?.result || null;
 
     if (!downloadLink) {
@@ -346,7 +411,6 @@ async function downloadFromServer(type, inputId, name, button) {
     }
 
     window.location.href = downloadLink;
-
   } catch (err) {
     console.error(err);
     closePopup();
@@ -354,9 +418,10 @@ async function downloadFromServer(type, inputId, name, button) {
   }
 }
 
-// Start typing when page loads
+// ── Start Effects ─────────────────────────────────────────────────
 window.addEventListener("load", () => {
-  setTimeout(typeWriter, 800);
+  hackerEffect(hackerText, original);
+  setTimeout(typeWriter, 1200);
 });
 </script>
 </body>
