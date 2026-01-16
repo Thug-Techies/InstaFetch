@@ -260,7 +260,7 @@
 
   <div class="header">
     <img src="https://i.ibb.co/60vszfKg/file-98.jpg" alt="Header Art">
-    <div class="created-by">Powered by THUG TECHIES</div>
+    <div class="created-by"></div>
   </div>
 
   <!-- Welcome with typing + cursor + underline -->
@@ -493,8 +493,8 @@ async function downloadFromServer(type, inputId, name, button) {
     pinterest: `https://delirius-apiofc.vercel.app/download/pinterestdl?url=`,
     spotify:   `https://delirius-apiofc.vercel.app/download/spotifydl?url=`,
     threads:   `https://delirius-apiofc.vercel.app/download/threads?url=`,
-    tiktok:    `https://delirius-apiofc.vercel.app/download/tiktok?url=`,
-    twitter:   `https://delirius-apiofc.vercel.app/download/twitterdl?url=`,
+    tiktok:    `https://apis-starlights-team.koyeb.app/starlight/tiktok?url=`,
+    twitter:   `https://apis-starlights-team.koyeb.app/starlight/twitter-dl?url=`,
     ytmp3:     `https://kyyokatsurestapi.my.id/downloader/ytmp3?url=`,
     ytmp4:     `https://kyyokatsurestapi.my.id/downloader/ytmp4?url=`
   };
@@ -504,7 +504,14 @@ async function downloadFromServer(type, inputId, name, button) {
     const data = await res.json();
     closePopup();
 
-    const downloadLink = data?.url || data?.data?.url || data?.download || data?.result || null;
+    let downloadLink;
+    if (type === 'tiktok') {
+      downloadLink = data.nowm || data.hd || null;
+    } else if (type === 'twitter') {
+      downloadLink = data.data?.video || null;
+    } else {
+      downloadLink = data?.url || data?.data?.url || data?.download || data?.result || null;
+    }
 
     if (!downloadLink) {
       return openPopup("Error", "Could not find any downloadable link.");
