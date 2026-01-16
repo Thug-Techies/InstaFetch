@@ -243,7 +243,7 @@
 
   <div class="header">
     <img src="https://i.ibb.co/60vszfKg/file-98.jpg" alt="Header Art">
-    <div class="created-by">Powered by THUG TECHIES</div>
+    <div class="created-by"></div>
   </div>
 
   <div class="welcome" id="welcomeText"></div>
@@ -353,10 +353,10 @@
 </div>
 
 <script>
-// ── Shared Hacker/Glitch Effect (SLOWER version) ───────────────────────
+// ── Shared Hacker/Glitch Effect (FASTER version) ───────────────────────
 const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?/~`";
 
-function hackerEffect(element, finalText, delayBetweenLetters = 110, maxScramblePerLetter = 14, intervalSpeed = 45) {
+function hackerEffect(element, finalText, delayBetweenLetters = 70, maxScramblePerLetter = 10, intervalSpeed = 35) {
   let index = 0;
 
   function revealNext() {
@@ -391,11 +391,11 @@ function hackerEffect(element, finalText, delayBetweenLetters = 110, maxScramble
 
 // ── Init both effects ────────────────────────────────────────────────
 window.addEventListener("load", () => {
-  // Title (top bar) - slightly faster than welcome
+  // Title (top bar) - nice quick pace
   const titleEl = document.getElementById("hackerText");
-  hackerEffect(titleEl, "INSTAFETCH • 萨格科技", 90, 12, 40);
+  hackerEffect(titleEl, "INSTAFETCH • 萨格科技", 70, 10, 35);
 
-  // Welcome message - slower typing/reveal
+  // Welcome message - faster but still readable & dramatic
   const welcomeEl = document.getElementById("welcomeText");
   const welcomeFullText = `Welcome to INSTAFETCH
 Your all-in-one media hub
@@ -403,10 +403,10 @@ Instagram • TikTok • YouTube • Spotify
 Fast. Clean. No watermark.
 Powered by THUG TECHIES only`;
 
-  // Start welcome after title begins (longer delay for dramatic effect)
+  // Start welcome shortly after title
   setTimeout(() => {
-    hackerEffect(welcomeEl, welcomeFullText, 135, 16, 55);
-  }, 2200);
+    hackerEffect(welcomeEl, welcomeFullText, 95, 12, 40);
+  }, 1400);
 });
 
 // ── Your existing popup + download logic (unchanged) ───────────────
