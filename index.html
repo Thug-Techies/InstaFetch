@@ -162,7 +162,7 @@
       color: #ffffff;  
       font-size: 1.45rem;  
       margin-bottom: 8px;  
-      min-height: 1.8em;        /* prevent jump when text is typing */  
+      min-height: 1.8em;  
       letter-spacing: 1px;  
     }  
   
@@ -170,6 +170,7 @@
       color: #aaaaaa;  
       font-size: 0.92rem;  
       margin-bottom: 18px;  
+      min-height: 1.4em;          /* prevent layout jump during typing */  
     }  
   
     .input-group {  
@@ -272,7 +273,7 @@
       <div class="api-card">  
         <img src="https://i.ouim.me/i/6bff2461.jpg" alt="Apple Music">  
         <h2>APPLE MUSIC</h2>  
-        <p>Download tracks as MP3</p>  
+        <p class="hacker-typing">Download tracks as MP3</p>  
         <div class="input-group">  
           <input type="text" id="appleUrl" class="url-input" placeholder="Paste Apple Music URL">  
           <button class="btn" onclick="downloadFromServer('apple', 'appleUrl', 'Apple Music', this)">Download</button>  
@@ -283,7 +284,7 @@
       <div class="api-card">  
         <img src="https://files.catbox.moe/g5phaa.jpg" alt="Instagram">  
         <h2>INSTAGRAM</h2>  
-        <p>Reels • Posts • Stories (HD)</p>  
+        <p class="hacker-typing">Reels • Posts • Stories (HD)</p>  
         <div class="input-group">  
           <input type="text" id="instagramUrl" class="url-input" placeholder="Paste Instagram URL">  
           <button class="btn" onclick="downloadFromServer('instagram', 'instagramUrl', 'Instagram', this)">Download</button>  
@@ -294,7 +295,7 @@
       <div class="api-card">  
         <img src="https://files.catbox.moe/b7nqr9.jpg" alt="Pinterest">  
         <h2>PINTEREST</h2>  
-        <p>Images & video pins</p>  
+        <p class="hacker-typing">Images & video pins</p>  
         <div class="input-group">  
           <input type="text" id="pinterestUrl" class="url-input" placeholder="Paste Pinterest URL">  
           <button class="btn" onclick="downloadFromServer('pinterest', 'pinterestUrl', 'Pinterest', this)">Download</button>  
@@ -305,7 +306,7 @@
       <div class="api-card">  
         <img src="https://files.catbox.moe/75zc7e.jpg" alt="Spotify">  
         <h2>SPOTIFY</h2>  
-        <p>Download tracks as MP3</p>  
+        <p class="hacker-typing">Download tracks as MP3</p>  
         <div class="input-group">  
           <input type="text" id="spotifyUrl" class="url-input" placeholder="Paste Spotify Track URL">  
           <button class="btn" onclick="downloadFromServer('spotify', 'spotifyUrl', 'Spotify', this)">Download</button>  
@@ -316,7 +317,7 @@
       <div class="api-card">  
         <img src="https://files.catbox.moe/qmvn0p.jpg" alt="Threads">  
         <h2>THREADS</h2>  
-        <p>Download thread videos</p>  
+        <p class="hacker-typing">Download thread videos</p>  
         <div class="input-group">  
           <input type="text" id="threadsUrl" class="url-input" placeholder="Paste Threads URL">  
           <button class="btn" onclick="downloadFromServer('threads', 'threadsUrl', 'Threads', this)">Download</button>  
@@ -327,7 +328,7 @@
       <div class="api-card">  
         <img src="https://files.catbox.moe/za5dx1.jpg" alt="TikTok">  
         <h2>TIKTOK</h2>  
-        <p>No watermark • HD quality</p>  
+        <p class="hacker-typing">No watermark • HD quality</p>  
         <div class="input-group">  
           <input type="text" id="tiktokUrl" class="url-input" placeholder="Paste TikTok URL">  
           <button class="btn" onclick="downloadFromServer('tiktok', 'tiktokUrl', 'TikTok', this)">Download</button>  
@@ -338,18 +339,18 @@
       <div class="api-card">  
         <img src="https://files.catbox.moe/numxut.jpg" alt="Twitter/X">  
         <h2>TWITTER / X</h2>  
-        <p>Videos & GIFs from posts</p>  
+        <p class="hacker-typing">Videos & GIFs from posts</p>  
         <div class="input-group">  
           <input type="text" id="twitterUrl" class="url-input" placeholder="Paste Twitter / X URL">  
           <button class="btn" onclick="downloadFromServer('twitter', 'twitterUrl', 'Twitter/X', this)">Download</button>  
         </div>  
       </div>  
-      
-      <!-- CapCut -->
+
+      <!-- CapCut -->  
       <div class="api-card">  
         <img src="https://i.ibb.co/QvLss5RB/file-104.jpg" alt="CapCut">  
         <h2>CAPCUT</h2>  
-        <p>Download videos & templates</p>  
+        <p class="hacker-typing">Download videos & templates</p>  
         <div class="input-group">  
           <input type="text" id="capcutUrl" class="url-input" placeholder="Paste CapCut URL">  
           <button class="btn" onclick="downloadFromServer('capcut', 'capcutUrl', 'CapCut', this)">Download</button>  
@@ -360,7 +361,7 @@
       <div class="api-card">  
         <img src="https://i.ibb.co/B280hGLK/file-103.jpg" alt="Facebook">  
         <h2>FACEBOOK</h2>  
-        <p>Reels • Videos • Posts (HD/SD)</p>  
+        <p class="hacker-typing">Reels • Videos • Posts (HD/SD)</p>  
         <div class="input-group">  
           <input type="text" id="facebookUrl" class="url-input" placeholder="Paste Facebook URL">  
           <button class="btn" onclick="downloadFromServer('facebook', 'facebookUrl', 'Facebook', this)">Download</button>  
@@ -371,7 +372,7 @@
       <div class="api-card">  
         <img src="https://i.ibb.co/fz6dkTbb/file-102.jpg" alt="MediaFire">  
         <h2>MEDIAFIRE</h2>  
-        <p>Download files directly</p>  
+        <p class="hacker-typing">Download files directly</p>  
         <div class="input-group">  
           <input type="text" id="mediafireUrl" class="url-input" placeholder="Paste MediaFire URL">  
           <button class="btn" onclick="downloadFromServer('mediafire', 'mediafireUrl', 'MediaFire', this)">Download</button>  
@@ -382,7 +383,7 @@
       <div class="api-card">  
         <img src="https://files.catbox.moe/1y5vqb.jpg" alt="YouTube">  
         <h2>YOUTUBE</h2>  
-        <p>Audio (MP3) or Video (MP4)</p>  
+        <p class="hacker-typing">Audio (MP3) or Video (MP4)</p>  
         <div class="input-group">  
           <input type="text" id="youtubeUrl" class="url-input" placeholder="Paste YouTube URL">  
           <button class="btn" onclick="downloadFromServer('ytmp3', 'youtubeUrl', 'YouTube Audio', this)">MP3</button>  
@@ -448,7 +449,7 @@ Fast. Clean. No watermark.`;
     const welcomeEl = document.getElementById("welcomeText");  
     const underlineEl = document.getElementById("underline");  
     let charIndex = 0;  
-    const typingSpeed = 65; // faster typing for welcome  
+    const typingSpeed = 65;  
   
     function typeWriter() {  
       if (charIndex < welcomeText.length) {  
@@ -461,15 +462,14 @@ Fast. Clean. No watermark.`;
         charIndex++;  
         setTimeout(typeWriter, typingSpeed);  
       } else {  
-        // Hide cursor and show underline when typing is complete  
         const cursor = welcomeEl.querySelector(".cursor");  
         if (cursor) cursor.style.display = "none";  
         underlineEl.classList.add("active");  
       }  
     }  
   
-    // ── NEW: Hacker-style typing for each card title ──────────────────────
-    function hackerType(element, finalText) {  
+    // ── Hacker-style typing / glitch for both h2 and p ────────────────────
+    function hackerType(element, finalText, speed = 60) {  
       let index = 0;  
   
       function reveal() {  
@@ -483,43 +483,47 @@ Fast. Clean. No watermark.`;
           element.textContent = display;  
   
           count++;  
-          if (count >= 7) {  
+          if (count >= 6) {  // shorter glitch for description text
             clearInterval(scramble);  
             index++;  
             element.textContent = finalText.slice(0, index);  
-            setTimeout(reveal, 50 + Math.random() * 40);  
+            setTimeout(reveal, speed + Math.random() * 50);  // variable speed
           }  
-        }, 30);  
+        }, 28);  
       }  
   
       reveal();  
     }  
   
-    // ── Init all effects ──────────────────────────────────────────────────  
+    // ── Init Effects ──────────────────────────────────────────────────────  
     window.addEventListener("load", () => {  
       // Title glitch effect  
       const titleEl = document.getElementById("hackerText");  
       hackerEffect(titleEl, "INSTAFETCH • 萨格科技", 110, 12, 45);  
   
-      // Welcome typing starts after delay  
+      // Welcome typing starts after a short delay  
       setTimeout(() => {  
         welcomeEl.innerHTML = "";  
         welcomeEl.innerHTML += `<span class="cursor"></span>`;  
         typeWriter();  
       }, 1800);  
   
-      // Card titles typing – staggered start  
-      const titles = document.querySelectorAll('.api-card h2');  
-      titles.forEach((h2, index) => {  
-        const text = h2.textContent.trim();  
-        h2.textContent = '';  
+      // Card titles (h2) + descriptions (p) typing – staggered  
+      const elements = document.querySelectorAll('.api-card h2, .api-card p.hacker-typing');  
+      elements.forEach((el, i) => {  
+        const text = el.textContent.trim();  
+        el.textContent = '';  
+        const isTitle = el.tagName === 'H2';  
+        const delay = isTitle ? (800 + i * 280) : (1200 + i * 350);  // descriptions start later  
+        const charSpeed = isTitle ? 55 : 70;  // descriptions a bit slower  
+  
         setTimeout(() => {  
-          hackerType(h2, text);  
-        }, 800 + index * 300);  
+          hackerType(el, text, charSpeed);  
+        }, delay);  
       });  
     });  
   
-    // ── Original popup + download logic (unchanged) ───────────────────────
+    // ── Your existing popup + download logic (unchanged) ────────────────  
     function openPopup(title, message) {  
       document.getElementById("popupTitle").textContent = title;  
       document.getElementById("popupMessage").textContent = message;  
