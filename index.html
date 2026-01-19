@@ -547,31 +547,36 @@ switch (type) {
   case 'spotify':
   case 'apple': {
     const media = data?.data?.media || [];
-    const audio = media.find(m => m.type === 'audio');
+    const audio = media.find(m => m.type === 'audio' && m.format === 'mp3');
     downloadLink = audio?.url || null;
     break;
   }
 
   case 'capcut': {
-    downloadLink = data?.data?.videoUrl || null;
+    // CapCut API DOES NOT return a download URL
+    // Only metadata, so this will always be null unless API changes
+    downloadLink = null;
     break;
   }
 
   case 'facebook': {
+    // Prefer HD, fallback to SD
     downloadLink = data?.data?.hd || data?.data?.sd || null;
     break;
   }
 
   case 'instagram': {
     if (Array.isArray(data?.BK9)) {
-      const video = data.BK9.find(m => m.type !== 'image');
-      downloadLink = video?.url || data.BK9[0]?.url || null;
+      // Pick first non-image (video)
+      const video = data.BK9.find(v => v.type !== 'image');
+      downloadLink = video?.url || null;
     }
     break;
   }
 
   case 'tiktok': {
-    downloadLink = data?.nowm || data?.hd || data?.url || null;
+    // Actual final mp4 link lives here
+    downloadLink = data?.BK9?.BK9 || null;
     break;
   }
 
@@ -595,6 +600,9 @@ switch (type) {
     downloadLink = data?.data?.video || data?.data?.image || null;
     break;
   }
+
+  default:
+    downloadLink = null;
 }
 
         if (!downloadLink) return openPopup("Error", "Could not find any downloadable link.");
