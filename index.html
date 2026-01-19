@@ -347,6 +347,28 @@
         <button class="btn" onclick="downloadFromServer('twitter', 'twitterUrl', 'Twitter/X', this)">Download</button>
       </div>
     </div>
+    
+    <!-- Facebook -->
+<div class="api-card">
+  <img src="https://files.catbox.moe/1clj4p.jpg" alt="Facebook">
+  <h2>FACEBOOK</h2>
+  <p>Reels • Videos • Posts (HD/SD)</p>
+  <div class="input-group">
+    <input type="text" id="facebookUrl" class="url-input" placeholder="Paste Facebook URL">
+    <button class="btn" onclick="downloadFromServer('facebook', 'facebookUrl', 'Facebook', this)">Download</button>
+  </div>
+</div>
+
+<!-- MediaFire -->
+<div class="api-card">
+  <img src="https://files.catbox.moe/ib9n7n.jpg" alt="MediaFire">
+  <h2>MEDIAFIRE</h2>
+  <p>Download files directly</p>
+  <div class="input-group">
+    <input type="text" id="mediafireUrl" class="url-input" placeholder="Paste MediaFire URL">
+    <button class="btn" onclick="downloadFromServer('mediafire', 'mediafireUrl', 'MediaFire', this)">Download</button>
+  </div>
+</div>
 
     <!-- YouTube -->
     <div class="api-card">
@@ -476,53 +498,88 @@ const patterns = {
 };
 
 async function downloadFromServer(type, inputId, name, button) {
-  const url = document.getElementById(inputId)?.value?.trim();
-  if (!url) return openPopup("Error", "Please paste a URL first.");
+    const url = document.getElementById(inputId)?.value?.trim();
+    if (!url) return openPopup("Error", "Please paste a URL first.");
 
-  const platform = (type === "ytmp3" || type === "ytmp4") ? "youtube" : type;
+    const platform = (type === "ytmp3" || type === "ytmp4") ? "youtube" : type;
 
-  if (!patterns[platform]?.test(url)) {
-    return openPopup("Invalid", `This doesn't look like a valid ${name} link.`);
-  }
-
-  openPopup("Processing", "Working on it... please wait");
-
-  const endpoints = {
-    apple:     `https://delirius-apiofc.vercel.app/download/applemusicdl?url=`,
-    instagram: `https://delirius-apiofc.vercel.app/download/instagram?url=`,
-    pinterest: `https://delirius-apiofc.vercel.app/download/pinterestdl?url=`,
-    spotify:   `https://delirius-apiofc.vercel.app/download/spotifydl?url=`,
-    threads:   `https://delirius-apiofc.vercel.app/download/threads?url=`,
-    tiktok:    `https://apis-starlights-team.koyeb.app/starlight/tiktok?url=`,
-    twitter:   `https://apis-starlights-team.koyeb.app/starlight/twitter-dl?url=`,
-    ytmp3:     `https://kyyokatsurestapi.my.id/downloader/ytmp3?url=`,
-    ytmp4:     `https://kyyokatsurestapi.my.id/downloader/ytmp4?url=`
-  };
-
-  try {
-    const res = await fetch(endpoints[type] + encodeURIComponent(url));
-    const data = await res.json();
-    closePopup();
-
-    let downloadLink;
-    if (type === 'tiktok') {
-      downloadLink = data.nowm || data.hd || null;
-    } else if (type === 'twitter') {
-      downloadLink = data.data?.video || null;
-    } else {
-      downloadLink = data?.url || data?.data?.url || data?.download || data?.result || null;
+    if (!patterns[platform]?.test(url)) {
+        return openPopup("Invalid", `This doesn't look like a valid ${name} link.`);
     }
 
-    if (!downloadLink) {
-      return openPopup("Error", "Could not find any downloadable link.");
-    }
+    openPopup("Processing", "Working on it... please wait");
 
-    window.location.href = downloadLink;
-  } catch (err) {
-    console.error(err);
-    closePopup();
-    openPopup("Network Error", "Failed to connect to the API.");
-  }
+    const endpoints = {
+        apple:     "https://delirius-apiofc.vercel.app/download/applemusicdl?url=",
+        spotify:   "https://apis.prexzyvilla.site/download/spotify?url=",
+        instagram: "https://delirius-apiofc.vercel.app/download/instagram?url=",
+        pinterest: "https://apis.prexzyvilla.site/download/pinterestV2?url=",
+        threads:   "https://delirius-apiofc.vercel.app/download/threads?url=",
+        tiktok:    "https://apis-starlights-team.koyeb.app/starlight/tiktok?url=",
+        twitter:   "https://api.bk9.dev/download/twitter?url=",
+        facebook:  "https://api.bk9.dev/download/fb3?url=",
+        mediafire: "https://api.bk9.dev/download/mediafire?url=",
+        ytmp3:     "https://kyyokatsurestapi.my.id/downloader/ytmp3?url=",
+        ytmp4:     "https://kyyokatsurestapi.my.id/downloader/ytmp4?url="
+    };
+
+    try {
+        const res = await fetch(endpoints[type] + encodeURIComponent(url));
+        const data = await res.json();
+        closePopup();
+
+        let downloadLink;
+
+        switch(type) {
+            case 'tiktok':
+                downloadLink = data.nowm || data.hd || null;
+                break;
+            case 'instagram':
+                if (data?.BK9?.length) {
+                    // Prefer video first, fallback to image
+                    const video = data.BK9.find(m => m.type === 'video');
+                    downloadLink = video?.url || data.BK9[0]?.url || null;
+                }
+                break;
+            case 'twitter':
+                downloadLink = data.BK9?.HD || data.data?.video || null;
+                break;
+            case 'facebook':
+                // Prefer HD then SD
+                if (data.BK9?.formats?.length) {
+                    const hd = data.BK9.formats.find(f => f.quality === "HD") || data.BK9.formats[0];
+                    downloadLink = hd?.url || null;
+                }
+                break;
+            case 'mediafire':
+                downloadLink = data.BK9?.link || data.BK9?.alternativeUrl || null;
+                break;
+            case 'spotify':
+            case 'apple':
+                // Prefer audio first, fallback to cover image
+                if (data.data?.media?.length) {
+                    const audio = data.data.media.find(m => m.type === 'audio');
+                    downloadLink = audio?.url || data.data.media[0]?.url || null;
+                }
+                break;
+            case 'pinterest':
+                downloadLink = data.data?.video || data.data?.image || null;
+                break;
+            default:
+                // YouTube & others
+                downloadLink = data?.url || data?.data?.url || data?.download || data?.result || null;
+                break;
+        }
+
+        if (!downloadLink) return openPopup("Error", "Could not find any downloadable link.");
+
+        window.location.href = downloadLink;
+
+    } catch (err) {
+        console.error(err);
+        closePopup();
+        openPopup("Network Error", "Failed to connect to the API.");
+    }
 }
 </script>
 </body>
