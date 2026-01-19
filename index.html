@@ -546,36 +546,37 @@ switch (type) {
 
   case 'spotify':
   case 'apple': {
+    // final mp3 link lives inside media[type=audio].url
     const media = data?.data?.media || [];
-    const audio = media.find(m => m.type === 'audio' && m.format === 'mp3');
+    const audio = media.find(m => m.type === 'audio');
     downloadLink = audio?.url || null;
     break;
   }
 
   case 'capcut': {
-    // CapCut API DOES NOT return a download URL
-    // Only metadata, so this will always be null unless API changes
-    downloadLink = null;
+    // already a direct mp4
+    downloadLink = data?.data?.videoUrl || null;
     break;
   }
 
   case 'facebook': {
-    // Prefer HD, fallback to SD
+    // prefer HD, fallback to SD
     downloadLink = data?.data?.hd || data?.data?.sd || null;
     break;
   }
 
   case 'instagram': {
+    // BK9 is an array, ignore images, grab video
     if (Array.isArray(data?.BK9)) {
-      // Pick first non-image (video)
-      const video = data.BK9.find(v => v.type !== 'image');
+      const video = data.BK9.find(m => m.type !== 'image');
       downloadLink = video?.url || null;
     }
     break;
   }
 
   case 'tiktok': {
-    // Actual final mp4 link lives here
+    // YOUR BUG WAS HERE
+    // final video is data.BK9.BK9
     downloadLink = data?.BK9?.BK9 || null;
     break;
   }
@@ -600,9 +601,6 @@ switch (type) {
     downloadLink = data?.data?.video || data?.data?.image || null;
     break;
   }
-
-  default:
-    downloadLink = null;
 }
 
         if (!downloadLink) return openPopup("Error", "Could not find any downloadable link.");
