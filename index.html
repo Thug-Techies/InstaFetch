@@ -91,7 +91,7 @@
     }  
   
     .module-underline.active {  
-      width: 60%;  
+      width: 60%; /* adjust percentage as desired */  
     }  
   
     .container {  
@@ -159,10 +159,10 @@
     }  
   
     .api-card h2 {  
-      color: #00ff41;          /* terminal green */  
+      color: #ffffff;  
       font-size: 1.45rem;  
       margin-bottom: 8px;  
-      min-height: 1.8em;        /* prevent layout jump */  
+      min-height: 1.8em;        /* prevent jump when text is typing */  
       letter-spacing: 1px;  
     }  
   
@@ -248,9 +248,8 @@
     }  
   </style>  
 </head>  
-
 <body>  
-
+  <!-- Top Bar with Hacker Glitch Effect (no cursor) -->  
   <div class="top-bar">  
     <div id="hackerText" class="hacker-title"></div>  
   </div>  
@@ -261,6 +260,7 @@
       <div class="created-by"></div>  
     </div>    
 
+    <!-- Welcome with typing + cursor + underline -->    
     <div class="welcome-container">  
       <div class="welcome" id="welcomeText"></div>  
       <div class="module-underline" id="underline"></div>  
@@ -268,6 +268,7 @@
 
     <main class="api-grid">
 
+      <!-- Apple Music -->  
       <div class="api-card">  
         <img src="https://i.ouim.me/i/6bff2461.jpg" alt="Apple Music">  
         <h2>APPLE MUSIC</h2>  
@@ -278,6 +279,7 @@
         </div>  
       </div>  
 
+      <!-- Instagram -->  
       <div class="api-card">  
         <img src="https://files.catbox.moe/g5phaa.jpg" alt="Instagram">  
         <h2>INSTAGRAM</h2>  
@@ -288,6 +290,7 @@
         </div>  
       </div>  
 
+      <!-- Pinterest -->  
       <div class="api-card">  
         <img src="https://files.catbox.moe/b7nqr9.jpg" alt="Pinterest">  
         <h2>PINTEREST</h2>  
@@ -298,6 +301,7 @@
         </div>  
       </div>  
 
+      <!-- Spotify -->  
       <div class="api-card">  
         <img src="https://files.catbox.moe/75zc7e.jpg" alt="Spotify">  
         <h2>SPOTIFY</h2>  
@@ -308,6 +312,7 @@
         </div>  
       </div>  
 
+      <!-- Threads -->  
       <div class="api-card">  
         <img src="https://files.catbox.moe/qmvn0p.jpg" alt="Threads">  
         <h2>THREADS</h2>  
@@ -318,6 +323,7 @@
         </div>  
       </div>  
 
+      <!-- TikTok -->  
       <div class="api-card">  
         <img src="https://files.catbox.moe/za5dx1.jpg" alt="TikTok">  
         <h2>TIKTOK</h2>  
@@ -328,6 +334,7 @@
         </div>  
       </div>  
 
+      <!-- Twitter / X -->  
       <div class="api-card">  
         <img src="https://files.catbox.moe/numxut.jpg" alt="Twitter/X">  
         <h2>TWITTER / X</h2>  
@@ -337,7 +344,8 @@
           <button class="btn" onclick="downloadFromServer('twitter', 'twitterUrl', 'Twitter/X', this)">Download</button>  
         </div>  
       </div>  
-
+      
+      <!-- CapCut -->
       <div class="api-card">  
         <img src="https://i.ibb.co/QvLss5RB/file-104.jpg" alt="CapCut">  
         <h2>CAPCUT</h2>  
@@ -348,6 +356,7 @@
         </div>  
       </div>  
 
+      <!-- Facebook -->  
       <div class="api-card">  
         <img src="https://i.ibb.co/B280hGLK/file-103.jpg" alt="Facebook">  
         <h2>FACEBOOK</h2>  
@@ -358,6 +367,7 @@
         </div>  
       </div>  
 
+      <!-- MediaFire -->  
       <div class="api-card">  
         <img src="https://i.ibb.co/fz6dkTbb/file-102.jpg" alt="MediaFire">  
         <h2>MEDIAFIRE</h2>  
@@ -368,6 +378,7 @@
         </div>  
       </div>  
 
+      <!-- YouTube -->  
       <div class="api-card">  
         <img src="https://files.catbox.moe/1y5vqb.jpg" alt="YouTube">  
         <h2>YOUTUBE</h2>  
@@ -382,6 +393,7 @@
     </main>  
   </div>  
 
+  <!-- Popup -->  
   <div class="popup-overlay" id="popupOverlay">  
     <div class="popup">  
       <h3 id="popupTitle">Message</h3>  
@@ -391,7 +403,7 @@
   </div>  
 
   <script>  
-    // ── Hacker Glitch Effect for Top Title ───────────────────────────────
+    // ── Hacker Glitch Effect for Title (no cursor) ────────────────────────  
     const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?/~`";  
   
     function hackerEffect(element, finalText, delayBetweenLetters = 110, maxScramblePerLetter = 12, intervalSpeed = 45) {  
@@ -427,7 +439,7 @@
       revealNext();  
     }  
   
-    // ── Typing Effect for Welcome Text ───────────────────────────────────
+    // ── Typing Effect with Cursor + Underline for Welcome ─────────────────  
     const welcomeText = `Welcome to INSTAFETCH  
 Your all-in-one media hub  
 Instagram • TikTok • YouTube • Spotify  
@@ -436,7 +448,7 @@ Fast. Clean. No watermark.`;
     const welcomeEl = document.getElementById("welcomeText");  
     const underlineEl = document.getElementById("underline");  
     let charIndex = 0;  
-    const typingSpeed = 65;  
+    const typingSpeed = 65; // faster typing for welcome  
   
     function typeWriter() {  
       if (charIndex < welcomeText.length) {  
@@ -449,13 +461,14 @@ Fast. Clean. No watermark.`;
         charIndex++;  
         setTimeout(typeWriter, typingSpeed);  
       } else {  
+        // Hide cursor and show underline when typing is complete  
         const cursor = welcomeEl.querySelector(".cursor");  
         if (cursor) cursor.style.display = "none";  
         underlineEl.classList.add("active");  
       }  
     }  
   
-    // ── NEW: Hacker Typing for Each Card Title ────────────────────────────
+    // ── NEW: Hacker-style typing for each card title ──────────────────────
     function hackerType(element, finalText) {  
       let index = 0;  
   
@@ -470,11 +483,11 @@ Fast. Clean. No watermark.`;
           element.textContent = display;  
   
           count++;  
-          if (count >= 7) {  // shorter scramble than top title
+          if (count >= 7) {  
             clearInterval(scramble);  
             index++;  
             element.textContent = finalText.slice(0, index);  
-            setTimeout(reveal, 50 + Math.random() * 40);  // 50-90ms per char
+            setTimeout(reveal, 50 + Math.random() * 40);  
           }  
         }, 30);  
       }  
@@ -482,31 +495,31 @@ Fast. Clean. No watermark.`;
       reveal();  
     }  
   
-    // ── Initialize All Effects ───────────────────────────────────────────
+    // ── Init all effects ──────────────────────────────────────────────────  
     window.addEventListener("load", () => {  
-      // Top title glitch
+      // Title glitch effect  
       const titleEl = document.getElementById("hackerText");  
       hackerEffect(titleEl, "INSTAFETCH • 萨格科技", 110, 12, 45);  
   
-      // Welcome typing
+      // Welcome typing starts after delay  
       setTimeout(() => {  
         welcomeEl.innerHTML = "";  
         welcomeEl.innerHTML += `<span class="cursor"></span>`;  
         typeWriter();  
       }, 1800);  
   
-      // Card titles typing (staggered)
-      const cards = document.querySelectorAll('.api-card h2');  
-      cards.forEach((h2, i) => {  
+      // Card titles typing – staggered start  
+      const titles = document.querySelectorAll('.api-card h2');  
+      titles.forEach((h2, index) => {  
         const text = h2.textContent.trim();  
-        h2.textContent = '';  // clear original text
+        h2.textContent = '';  
         setTimeout(() => {  
           hackerType(h2, text);  
-        }, 800 + i * 300);  // start one after another with delay
+        }, 800 + index * 300);  
       });  
     });  
   
-    // ── Your original popup + download logic (unchanged) ─────────────────
+    // ── Original popup + download logic (unchanged) ───────────────────────
     function openPopup(title, message) {  
       document.getElementById("popupTitle").textContent = title;  
       document.getElementById("popupMessage").textContent = message;  
@@ -564,6 +577,7 @@ Fast. Clean. No watermark.`;
             let downloadLink;  
   
             switch (type) {  
+  
               case 'spotify':  
               case 'apple': {  
                 const media = data?.data?.media || [];  
@@ -571,14 +585,17 @@ Fast. Clean. No watermark.`;
                 downloadLink = audio?.url || null;  
                 break;  
               }  
+  
               case 'capcut': {  
                 downloadLink = data?.data?.videoUrl || null;  
                 break;  
               }  
+  
               case 'facebook': {  
                 downloadLink = data?.data?.hd || data?.data?.sd || null;  
                 break;  
               }  
+  
               case 'instagram': {  
                 if (Array.isArray(data?.BK9)) {  
                   const video = data.BK9.find(m => m.type !== 'image');  
@@ -586,23 +603,28 @@ Fast. Clean. No watermark.`;
                 }  
                 break;  
               }  
+  
               case 'tiktok': {  
                 downloadLink = data?.BK9?.BK9 || null;  
                 break;  
               }  
+  
               case 'twitter': {  
                 downloadLink = data?.BK9?.HD || data?.data?.video || null;  
                 break;  
               }  
+  
               case 'mediafire': {  
                 downloadLink = data?.data?.url || data?.BK9?.link || null;  
                 break;  
               }  
+  
               case 'ytmp3':  
               case 'ytmp4': {  
                 downloadLink = data?.data?.url || data?.url || null;  
                 break;  
               }  
+  
               case 'pinterest': {  
                 downloadLink = data?.data?.video || data?.data?.image || null;  
                 break;  
