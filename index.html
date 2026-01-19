@@ -166,11 +166,15 @@
       filter: grayscale(30%);  
     }  
   
+    .api-card h2,  
+    .api-card p {  
+      min-height: 1.6em;          /* prevents layout jump during typing */  
+    }  
+  
     .api-card h2 {  
       color: #ffffff;  
       font-size: 1.45rem;  
       margin-bottom: 8px;  
-      min-height: 1.8em;  
       letter-spacing: 1px;  
     }  
   
@@ -178,7 +182,6 @@
       color: #aaaaaa;  
       font-size: 0.92rem;  
       margin-bottom: 18px;  
-      min-height: 1.4em;  
     }  
   
     .input-group {  
@@ -257,7 +260,7 @@
       background: #333333;  
     }  
 
-    /* ── Faint Matrix rain ──────────────────────────────────────────────── */
+    /* Faint Matrix rain canvas */
     #matrix-bg {
       position: fixed;
       inset: 0;
@@ -425,7 +428,7 @@
   </div>  
 
   <script>  
-    // ── Faint Matrix rain (now WHITE) ─────────────────────────────────────
+    // ── Faint Matrix rain (white version) ─────────────────────────────────
     (function() {
       const canvas = document.getElementById('matrix-bg');
       if (!canvas) return;
@@ -443,8 +446,7 @@
         ctx.fillStyle = 'rgba(0,0,0,0.04)';
         ctx.fillRect(0, 0, w, h);
 
-        // Changed to white (pale)
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';  
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';  // white, faint
 
         ctx.font = fontSize + 'px monospace';
 
@@ -455,9 +457,7 @@
 
           ctx.fillText(text, x, y);
 
-          if (y > h && Math.random() > 0.975) {
-            drops[i] = 0;
-          }
+          if (y > h && Math.random() > 0.975) drops[i] = 0;
           drops[i]++;
         }
       }
@@ -506,6 +506,33 @@
       revealNext();  
     }  
   
+    // ── Typing / glitch effect for cards (h2 + p) ─────────────────────────
+    function hackerType(element, finalText) {  
+      let index = 0;  
+  
+      function reveal() {  
+        if (index >= finalText.length) return;  
+  
+        let count = 0;  
+        const scramble = setInterval(() => {  
+          let display = finalText.slice(0, index) +  
+                        chars[Math.floor(Math.random() * chars.length)] +  
+                        ' '.repeat(finalText.length - index - 1);  
+          element.textContent = display;  
+  
+          count++;  
+          if (count >= 7) {  
+            clearInterval(scramble);  
+            index++;  
+            element.textContent = finalText.slice(0, index);  
+            setTimeout(reveal, 50 + Math.random() * 40);  
+          }  
+        }, 30);  
+      }  
+  
+      reveal();  
+    }  
+  
     // ── Typing Effect with Cursor + Underline for Welcome ─────────────────  
     const welcomeText = `Welcome to INSTAFETCH  
 Your all-in-one media hub  
@@ -534,19 +561,33 @@ Fast. Clean. No watermark.`;
       }  
     }  
   
-    // ── Init Effects ──────────────────────────────────────────────────────  
+    // ── Init all effects ──────────────────────────────────────────────────  
     window.addEventListener("load", () => {  
+      // Top title glitch
       const titleEl = document.getElementById("hackerText");  
       hackerEffect(titleEl, "INSTAFETCH • 萨格科技", 110, 12, 45);  
   
+      // Welcome typing
       setTimeout(() => {  
         welcomeEl.innerHTML = "";  
         welcomeEl.innerHTML += `<span class="cursor"></span>`;  
         typeWriter();  
       }, 1800);  
+  
+      // Card titles & descriptions typing – staggered
+      const cardElements = document.querySelectorAll('.api-card h2, .api-card p');  
+      cardElements.forEach((el, i) => {  
+        const text = el.textContent.trim();  
+        el.textContent = '';  
+        // Titles start sooner, descriptions a bit later
+        const delay = el.tagName === 'H2' ? (800 + i * 280) : (1400 + i * 380);
+        setTimeout(() => {  
+          hackerType(el, text);  
+        }, delay);  
+      });  
     });  
   
-    // ── Your existing popup + download logic (unchanged) ────────────────  
+    // ── Original popup + download logic (unchanged) ───────────────────────
     function openPopup(title, message) {  
       document.getElementById("popupTitle").textContent = title;  
       document.getElementById("popupMessage").textContent = message;  
@@ -604,57 +645,24 @@ Fast. Clean. No watermark.`;
             let downloadLink;  
   
             switch (type) {  
-  
-              case 'spotify':  
-              case 'apple': {  
+              case 'spotify': case 'apple': {  
                 const media = data?.data?.media || [];  
                 const audio = media.find(m => m.type === 'audio');  
-                downloadLink = audio?.url || null;  
-                break;  
-              }         
-                case 'capcut': {  
-                downloadLink = data?.data?.videoUrl || null;  
-                break;  
+                downloadLink = audio?.url || null; break;  
               }  
-  
-              case 'facebook': {  
-                downloadLink = data?.data?.hd || data?.data?.sd || null;  
-                break;  
-              }  
-  
+              case 'capcut': { downloadLink = data?.data?.videoUrl || null; break; }  
+              case 'facebook': { downloadLink = data?.data?.hd || data?.data?.sd || null; break; }  
               case 'instagram': {  
                 if (Array.isArray(data?.BK9)) {  
                   const video = data.BK9.find(m => m.type !== 'image');  
                   downloadLink = video?.url || null;  
-                }  
-                break;  
+                } break;  
               }  
-  
-              case 'tiktok': {  
-                downloadLink = data?.BK9?.BK9 || null;  
-                break;  
-              }  
-  
-              case 'twitter': {  
-                downloadLink = data?.BK9?.HD || data?.data?.video || null;  
-                break;  
-              }  
-  
-              case 'mediafire': {  
-                downloadLink = data?.data?.url || data?.BK9?.link || null;  
-                break;  
-              }  
-  
-              case 'ytmp3':  
-              case 'ytmp4': {  
-                downloadLink = data?.data?.url || data?.url || null;  
-                break;  
-              }  
-  
-              case 'pinterest': {  
-                downloadLink = data?.data?.video || data?.data?.image || null;  
-                break;  
-              }  
+              case 'tiktok': { downloadLink = data?.BK9?.BK9 || null; break; }  
+              case 'twitter': { downloadLink = data?.BK9?.HD || data?.data?.video || null; break; }  
+              case 'mediafire': { downloadLink = data?.data?.url || data?.BK9?.link || null; break; }  
+              case 'ytmp3': case 'ytmp4': { downloadLink = data?.data?.url || data?.url || null; break; }  
+              case 'pinterest': { downloadLink = data?.data?.video || data?.data?.image || null; break; }  
             }  
   
             if (!downloadLink) return openPopup("Error", "Could not find any downloadable link.");  
