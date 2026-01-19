@@ -504,7 +504,9 @@ const patterns = {
   threads:   /threads\.com/i,
   tiktok:    /tiktok\.com/i,
   twitter:   /(twitter\.com|x\.com)/i,
-  youtube:   /(youtube\.com|youtu\.be)/i
+  youtube:   /(youtube\.com|youtu\.be)/i,
+  capcut:    /capcut\.com/i,
+  facebook: /facebook\.com/i
 };
 
 async function downloadFromServer(type, inputId, name, button) {
@@ -540,46 +542,60 @@ async function downloadFromServer(type, inputId, name, button) {
 
         let downloadLink;
 
-        switch(type) {
-            case 'tiktok':
-                downloadLink = data.nowm || data.hd || null;
-                break;
-            case 'instagram':
-                if (data?.BK9?.length) {
-                    // Prefer video first, fallback to image
-                    const video = data.BK9.find(m => m.type === 'video');
-                    downloadLink = video?.url || data.BK9[0]?.url || null;
-                }
-                break;
-            case 'twitter':
-                downloadLink = data.BK9?.HD || data.data?.video || null;
-                break;
-            case 'facebook':
-                // Prefer HD then SD
-                if (data.BK9?.formats?.length) {
-                    const hd = data.BK9.formats.find(f => f.quality === "HD") || data.BK9.formats[0];
-                    downloadLink = hd?.url || null;
-                }
-                break;
-            case 'mediafire':
-                downloadLink = data.BK9?.link || data.BK9?.alternativeUrl || null;
-                break;
-            case 'spotify':
-            case 'apple':
-                // Prefer audio first, fallback to cover image
-                if (data.data?.media?.length) {
-                    const audio = data.data.media.find(m => m.type === 'audio');
-                    downloadLink = audio?.url || data.data.media[0]?.url || null;
-                }
-                break;
-            case 'pinterest':
-                downloadLink = data.data?.video || data.data?.image || null;
-                break;
-            default:
-                // YouTube & others
-                downloadLink = data?.url || data?.data?.url || data?.download || data?.result || null;
-                break;
-        }
+switch (type) {
+
+  case 'spotify':
+  case 'apple': {
+    const media = data?.data?.media || [];
+    const audio = media.find(m => m.type === 'audio');
+    downloadLink = audio?.url || null;
+    break;
+  }
+
+  case 'capcut': {
+    downloadLink = data?.data?.videoUrl || null;
+    break;
+  }
+
+  case 'facebook': {
+    downloadLink = data?.data?.hd || data?.data?.sd || null;
+    break;
+  }
+
+  case 'instagram': {
+    if (Array.isArray(data?.BK9)) {
+      const video = data.BK9.find(m => m.type !== 'image');
+      downloadLink = video?.url || data.BK9[0]?.url || null;
+    }
+    break;
+  }
+
+  case 'tiktok': {
+    downloadLink = data?.nowm || data?.hd || data?.url || null;
+    break;
+  }
+
+  case 'twitter': {
+    downloadLink = data?.BK9?.HD || data?.data?.video || null;
+    break;
+  }
+
+  case 'mediafire': {
+    downloadLink = data?.data?.url || data?.BK9?.link || null;
+    break;
+  }
+
+  case 'ytmp3':
+  case 'ytmp4': {
+    downloadLink = data?.data?.url || data?.url || null;
+    break;
+  }
+
+  case 'pinterest': {
+    downloadLink = data?.data?.video || data?.data?.image || null;
+    break;
+  }
+}
 
         if (!downloadLink) return openPopup("Error", "Could not find any downloadable link.");
 
